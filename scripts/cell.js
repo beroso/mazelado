@@ -13,7 +13,9 @@ function Cell(canvas,x,y) {
 Cell.inherit(Element);
 
 Cell.prototype.draw = function() {
-    this.canvas.strokeRect(this.y*this.canvas.space,this.x*this.canvas.space, this.canvas.space, this.canvas.space);
+    var x = this.y * this.canvas.space - 0.5;
+    var y = this.x * this.canvas.space - 0.5;
+    this.canvas.strokeRect(x, y, this.canvas.space + 1, this.canvas.space + 1);
 }
 
 Cell.prototype.erase = function() {
@@ -30,12 +32,14 @@ Cell.prototype.drawBreakWall = function(xi, yi, xf, yf, color) {
     this.canvas.timeout += 10;
 
     setTimeout(
-    function() {
-        canvas.strokeStyle = color;
-        canvas.drawLine(xi, yi, xf, yf);
-        canvas.strokeStyle = '#000000';
-    },
-    this.canvas.timeout
+        function() {
+            canvas.lineWidth = 1;
+            canvas.strokeStyle = color;
+            canvas.drawLine(xi, yi, xf, yf);
+            canvas.strokeStyle = '#000000';
+            canvas.lineWidth = 1;
+        },
+        this.canvas.timeout
     );
 }
 
@@ -49,21 +53,24 @@ Cell.prototype.breakWall = function(line,column) {
     var y = this.x * this.canvas.space;
     var x = this.y * this.canvas.space;
 
+    var wallColor = '#ffffff';
+    
+    var difference = 1;
 
     if(this.wall.getLeft()) {
-        this.drawBreakWall(x, y + 1, x, y + this.canvas.space - 1, '#ffffff');
+        this.drawBreakWall(x, y + difference, x, y + this.canvas.space - difference, wallColor);
     }
 
     if(this.wall.getRight()) {
-        this.drawBreakWall(x + this.canvas.space, y + 1, x + this.canvas.space, y - 1 + this.canvas.space, '#ffffff');
+        this.drawBreakWall(x + this.canvas.space, y + difference, x + this.canvas.space, y - difference + this.canvas.space, wallColor);
     }
 
     if(this.wall.getNorth()) {
-        this.drawBreakWall(x + 1, y, x - 1 + this.canvas.space, y, '#ffffff');
+        this.drawBreakWall(x + difference, y, x - difference + this.canvas.space, y, wallColor);
     }
 
     if(this.wall.getSouth()) {
-        this.drawBreakWall(x + 1, y + this.canvas.space, x - 1 + this.canvas.space, y + this.canvas.space, '#ffffff');
+        this.drawBreakWall(x + difference, y + this.canvas.space, x - difference + this.canvas.space, y + this.canvas.space, wallColor);
     }
 
 }
@@ -76,30 +83,31 @@ Cell.prototype.fillCell = function(color) {
 
     this.canvas.timeout += 20;
 
-
+    var difference = 1;
+    
     if(this.wall.getLeft()) {
-        this.drawBreakWall(x, y + 1, x, y + this.canvas.space - 1, color);
+        this.drawBreakWall(x, y + difference, x, y + this.canvas.space - difference, color);
     }
 
     if(this.wall.getRight()) {
-        this.drawBreakWall(x + this.canvas.space, y + 1, x + this.canvas.space, y - 1 + this.canvas.space, color);
+        this.drawBreakWall(x + this.canvas.space, y + difference, x + this.canvas.space, y - difference + this.canvas.space, color);
     }
 
     if(this.wall.getNorth()) {
-        this.drawBreakWall(x + 1, y, x - 1 + this.canvas.space, y, color);
+        this.drawBreakWall(x + difference, y, x - difference + this.canvas.space, y, color);
     }
 
     if(this.wall.getSouth()) {
-        this.drawBreakWall(x + 1, y + this.canvas.space, x - 1 + this.canvas.space, y + this.canvas.space, color);
+        this.drawBreakWall(x + difference, y + this.canvas.space, x - difference + this.canvas.space, y + this.canvas.space, color);
     }
 
     setTimeout(
-    function() {
-        canvas.fillStyle = color;
-        canvas.fillRect(x + 1, y + 1, canvas.space - 2, canvas.space - 2);
-        canvas.fillStyle = '#000000';
-    },
-    this.canvas.timeout
+        function() {
+            canvas.fillStyle = color;
+            canvas.fillRect(x + 1, y + 1, canvas.space - 2, canvas.space - 2);
+            canvas.fillStyle = '#000000';
+        },
+        this.canvas.timeout
     );
 }
 

@@ -22,27 +22,28 @@
         
             <form id="form-maze">
                 <h3>MazeLado v1.0</h3>
-                <label for="select-algorithm">Algorithm:</label> <br />
+                |
+                <label for="select-algorithm">Algorithm:</label> 
                 <select id="select-algorithm">
                     <option value="dfs">DFS</option>
                     <option value="prim">PRIM</option>
                     <option value="kruskal">KRUSKAL</option>
                     <option value="kruskal-modificado">MODIFIED KRUSKAL</option>
                 </select>
-                <br />
-
-                <label>Lines X Columns:</label><br />
-                <input type="text" name="input-line" id="input-line" size="3" value="20" maxlength="2" />
+                |
+                <label>Lines X Columns:</label>
+                <input type="text" name="input-line" id="input-line" size="2" value="20" maxlength="2" />
                 X
-                <input type="text" name="input-column" id="input-column" size="3" value="20" maxlength="2" />
-
-                <br />
-                <button id="submit-generate">GENERATE</button> <img src="img/loading.gif" width="16" height="16" id="img-loading-generate" style="display: none;" /> <br />
-                <button id="submit-solve" disabled="disabled">SOLVE</button> <img src="img/loading.gif" width="16" height="16" id="img-loading-solve" style="display: none;" /><br />
+                <input type="text" name="input-column" id="input-column" size="2" value="20" maxlength="2" />
+                |
+                <button id="submit-generate">GENERATE</button> <img src="img/loading.gif" width="16" height="16" id="img-loading-generate" style="display: none;" />
+                <button id="submit-solve" disabled="disabled">SOLVE</button> <img src="img/loading.gif" width="16" height="16" id="img-loading-solve" style="display: none;" />
             
+                <button id="submit-reset">RESET</button>
+                
+                <a href="help.html" id="link-help" title="help"> ? </a>
+                
             </form>
-
-            <button id="submit-reset">RESET</button>
 
         </div>
 
@@ -56,6 +57,8 @@
                 <li><a href="#" id="mark-finish-cell">Mark as "FINISH" cell</a></li>
             </ul>
         </div>
+        
+        <div id="log"></div>
         
     </body>
 

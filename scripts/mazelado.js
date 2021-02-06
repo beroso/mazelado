@@ -90,8 +90,8 @@ Mazelado.prototype._fillWallDensity = function() {
             northCell = (this._cellExists(northIndex[0],northIndex[1])) ? this.maze[northIndex[0]][northIndex[1]] : null;
             leftCell = (this._cellExists(leftIndex[0],leftIndex[1])) ? this.maze[leftIndex[0]][leftIndex[1]] : null ;
             currentCell.setWallsDensitys({
-north: (northCell) ? northCell.getWallsDensitys({south: true})[0]: null,
-left: (leftCell) ? leftCell.getWallsDensitys({right: true})[0]: null
+                north: (northCell) ? northCell.getWallsDensitys({south: true})[0]: null,
+                left: (leftCell) ? leftCell.getWallsDensitys({right: true})[0]: null
             });
         }
     }
@@ -107,10 +107,12 @@ Mazelado.prototype._getSortedListOfWalls = function () {
     for ( var i = 0 ; i < this.numberOfLines ; i++ ) {
         for ( var j = 0 ; j < this.numberOfColumns ; j++) {
             currentCell = this.maze[i][j];
-            sortedListOfWalls = sortedListOfWalls.concat(currentCell.getWallsDensitys({
-south: true,
-right: true
-            }));
+            sortedListOfWalls = sortedListOfWalls.concat(
+                currentCell.getWallsDensitys({
+                    south: true,
+                    right: true
+                })
+            );
         }
     }
     sortedListOfWalls = sortedListOfWalls.sort(this._sortFunction);
@@ -260,16 +262,14 @@ Mazelado.prototype._getListOfCellsAndListOfWalls = function() {
     var cells = [];
     var walls = [];
 
-    var currentCell = null;
-
     for(var i = 0; i < this.numberOfLines; i++) {
         for(var j = 0; j < this.numberOfColumns; j++) {
             cell = this.maze[i][j];
             cells.push(cell);
-            walls.push([[cell.wall.line, cell.wall.column], cell.wall.indexOfNorth()]);
+            if(i) walls.push([[cell.wall.line, cell.wall.column], cell.wall.indexOfNorth()]); //([cellFrom.x, cellFrom.y], [cellTo.x, cellTo.y])
+            if(j) walls.push([[cell.wall.line, cell.wall.column], cell.wall.indexOfLeft()]);
             //walls.push([[cell.wall.line, cell.wall.column], cell.wall.indexOfSouth()]);
-            //walls.push([[cell.wall.line, cell.wall.column], cell.wall.indexOfLeft()]);
-            walls.push([[cell.wall.line, cell.wall.column], cell.wall.indexOfRight()]);
+            //walls.push([[cell.wall.line, cell.wall.column], cell.wall.indexOfRight()]);
         }
     }
 
@@ -280,6 +280,7 @@ Mazelado.prototype.generateKruskalModificado = function() {
     var cellsAndWalls = this._getListOfCellsAndListOfWalls();
     var cells = cellsAndWalls.listOfCells;
     var listOfWalls = cellsAndWalls.listOfWalls;
+    delete(cellsAndWalls);
     var uf = new UnionFind(cells);
     var numberOfSets = cells.length;
 

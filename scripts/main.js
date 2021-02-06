@@ -3,7 +3,7 @@ var $canvas = $('maze');
 
 var ctx = $canvas.getContext('2d');
 ctx.space = 12;
-ctx.lineWidth = 2;
+ctx.lineWidth = 1;
 ctx.timeout = 0;
 
 ctx.drawLine = function(xi, yi, xf, yf) {
@@ -37,7 +37,7 @@ $submitGenerate.onclick = function(event) {
         var lines = parseInt($inputLine.value);
         var columns = parseInt($inputColumn.value);
 
-        if(lines > 0 && columns > 0) {
+        if(lines > 1 && columns > 1) {
 
             $imgLoadingGenerate.style.display = 'inline';
             
@@ -46,7 +46,24 @@ $submitGenerate.onclick = function(event) {
             
             $canvas.width = columns * ctx.space;
             $canvas.height = lines * ctx.space;
+            
+            //ctx.clearRect(0, 0, $canvas.width, $canvas.height);
+            ctx.strokeRect(0.5, 0.5, $canvas.width - 1, $canvas.height - 1);
 
+            /*
+            for(var x = 0; x < $canvas.width; x += ctx.space) {
+                ctx.moveTo(0.5 + x, 0);
+                ctx.lineTo(0.5 + x, $canvas.height);
+            }
+            
+            for(var y = 0; y < $canvas.height; y += ctx.space) {
+                ctx.moveTo(0, 0.5 + y);
+                ctx.lineTo($canvas.width, 0.5 +  y);
+            }
+            
+            ctx.stroke();
+            */
+            
             maze = new Mazelado(ctx, lines, columns);
 
             switch($selectAlgorithm.value) {
@@ -67,12 +84,12 @@ $submitGenerate.onclick = function(event) {
             }
             
             setTimeout(
-            function() {
-                $submitGenerate.removeAttribute('disabled');
-                $submitSolve.removeAttribute('disabled');
-                $imgLoadingGenerate.style.display = 'none';
-            },
-            ctx.timeout
+                function() {
+                    $submitGenerate.removeAttribute('disabled');
+                    $submitSolve.removeAttribute('disabled');
+                    $imgLoadingGenerate.style.display = 'none';
+                },
+                ctx.timeout
             );
         }
         else {
@@ -110,23 +127,20 @@ $submitSolve.onclick = function(event) {
 
 $submitReset.onclick = function() {
     location.reload(true);
+    
+    return false;
 }
-
-
-
-
-
 
 var $markStartCell = $('mark-start-cell');
 var $markFinishCell = $('mark-finish-cell');
 //var $menuWait = $('menu-wait');
 
 function getMouseX(event) {
-    return event.clientX - $canvas.offsetLeft;
+    return event.pageX - $canvas.offsetLeft;
 }
 
 function getMouseY(event) {
-    return event.clientY - $canvas.offsetTop;
+    return event.pageY - $canvas.offsetTop;
 }
 
 var lastCoordCanvasX = null;
@@ -140,7 +154,10 @@ $markStartCell.onmousedown = function(e) {
         
         maze.setBegin(coordX, coordY);
     }
+    
+    return false;
 }
+$markStartCell.onclick = $markStartCell.onmousedown;
 
 $markFinishCell.onmousedown = function(e) {
     if(maze && lastCoordCanvasX >= 0 && lastCoordCanvasY >= 0  && !$submitSolve.getAttribute('disabled')) {
@@ -150,7 +167,10 @@ $markFinishCell.onmousedown = function(e) {
         
         maze.setEnd(coordX, coordY);
     }
+    
+    return false;
 }
+$markFinishCell.onclick = $markFinishCell.onmousedown
 
 
 //context menu
@@ -169,6 +189,8 @@ function clickContextMenu(e) {
     if (mouseEvent.button == 0 || mouseEvent.button == 1) {
         esconder();
     }
+    
+    return false;
 }
 
 $canvas.onmousedown = clickContextMenu;
@@ -176,9 +198,11 @@ $contextMenu.onmousedown = clickContextMenu;
 $contextMenu.onmouseout = function(e){
     var mouseEvent = e || event;
     var element = mouseEvent.relatedTarget || mouseEvent.toElement; 
-    if (element.nodeName != "LI" && element.nodeName != "A") {
+    if (element.nodeName != 'LI' && element.nodeName != 'A') {
         esconder();
     }
+    
+    return false;
 };
 
 $canvas.oncontextmenu = function(){
@@ -186,9 +210,9 @@ $canvas.oncontextmenu = function(){
 };
 
 function mostrar(e){
-    $contextMenu.style.display = "block";
-    $contextMenu.style.top = e.clientY + 5 + "px";
-    $contextMenu.style.left = e.clientX + 5 + "px";
+    $contextMenu.style.display = 'block';
+    $contextMenu.style.top = e.pageY + 5 + 'px';
+    $contextMenu.style.left = e.pageX + 5 + 'px';
     
     if(maze && lastCoordCanvasX >= 0 && lastCoordCanvasY >= 0 && !$submitSolve.getAttribute('disabled')) {
         $markStartCell.style.color = '#00f';
@@ -202,19 +226,7 @@ function mostrar(e){
 
 function esconder(){
     setTimeout(function(){
-        $contextMenu.style.display = "none";
+        $contextMenu.style.display = 'none';
     }, 100);
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
