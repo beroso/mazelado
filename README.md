@@ -1,2 +1,7 @@
 # mazelado
-Trabalho da disciplina Algoritmos em Grafos - FFB
+
+Javascript maze genenerator and solver using graph data structure and algorithms.
+
+Assignment of *Graph Algoritms* course - Faculdade Farias Brito (2010).
+
+![Mazelado](img/mazelado.gif)
