@@ -1,0 +1,65 @@
+
+label {
+    font-weight: bold;
+}
+
+#form-maze h3 {
+    color: green;
+}
+
+#maze {
+    border: 1px solid #f00;
+}
+
+#panel {
+    float: left;
+    background: #f5f5f5;
+    padding: 5px;
+    margin-right: 10px;
+}
+
+/* context menu */
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#context-menu {
+    background: #efefef;
+    border: 1px solid #aaa;
+    font-size: 10pt;
+    position: absolute;
+    display: none;
+}
+
+#context-menu ul li {
+    padding: 2px 5px;
+    cursor: default;
+}
+
+#context-menu ul li a {
+    padding: 2px 5px;
+}
+
+#context-menu ul li a:hover {
+    color: #fff;
+    background: #069;
+}
+
+#mark-start-cell {
+    color: #00f;
+}
+
+#mark-finish-cell {
+    color: #f00;
+}
+
+#mark-start-cell:hover, #mark-finish-cell:hover {
+    color: #fff;
+}

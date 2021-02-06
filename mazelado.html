@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+        
+        <link rel="stylesheet" type="text/css" href="css/style.css"></script>
+        
+        <script type="text/javascript" src="scripts/utils.js"></script>
+        <script type="text/javascript" src="scripts/element.js"></script>
+        <script type="text/javascript" src="scripts/cell.js"></script>
+        <script type="text/javascript" src="scripts/density.js"></script>
+        <script type="text/javascript" src="scripts/solve.js"></script>
+        <script type="text/javascript" src="scripts/union-find.js"></script>
+        <script type="text/javascript" src="scripts/mazelado.js"></script>
+        
+    </head>
+    
+    <body>
+
+        <div id="panel">
+        
+            <form id="form-maze">
+                <h3>MazeLado v1.0</h3>
+                <label for="select-algorithm">Algorithm:</label> <br />
+                <select id="select-algorithm">
+                    <option value="dfs">DFS</option>
+                    <option value="prim">PRIM</option>
+                    <option value="kruskal">KRUSKAL</option>
+                    <option value="kruskal-modificado">MODIFIED KRUSKAL</option>
+                </select>
+                <br />
+
+                <label>Lines X Columns:</label><br />
+                <input type="text" name="input-line" id="input-line" size="3" value="20" maxlength="2" />
+                X
+                <input type="text" name="input-column" id="input-column" size="3" value="20" maxlength="2" />
+
+                <br />
+                <button id="submit-generate">GENERATE</button> <img src="img/loading.gif" width="16" height="16" id="img-loading-generate" style="display: none;" /> <br />
+                <button id="submit-solve" disabled="disabled">SOLVE</button> <img src="img/loading.gif" width="16" height="16" id="img-loading-solve" style="display: none;" /><br />
+            
+            </form>
+
+            <button id="submit-reset">RESET</button>
+
+        </div>
+
+        <canvas id="maze" width="200" height="200">
+            Seu browser nao suporta canvas
+        </canvas>
+
+        <div id="context-menu">
+            <ul>
+                <li><a href="#" id="mark-start-cell">Mark as "START" cell</a></li>
+                <li><a href="#" id="mark-finish-cell">Mark as "FINISH" cell</a></li>
+            </ul>
+        </div>
+        
+    </body>
+
+    <script type="text/javascript" src="scripts/main.js"></script>
+
+</html>
